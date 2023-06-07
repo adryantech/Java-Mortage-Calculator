@@ -1,0 +1,56 @@
+
+////// updated
+
+import java.awt.*;
+import java.sql.SQLOutput;
+import java.text.NumberFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        byte MONTHS_IN_YEAR = 12;
+        byte PERCENT = 100;
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Principal: ");
+        int principal = scanner.nextInt();
+        while(true){
+            if(principal<1000||principal>1_000_000){
+                System.out.print("Principal between 1,000 and 1,000,000: ");
+                principal = scanner.nextInt();
+            }
+            else
+                break;
+        }
+        System.out.print("Annual interest rate: ");
+        float annualInterest = scanner.nextFloat();
+        while(true){
+            if(0>annualInterest||annualInterest>30){
+                System.out.print("Interest rate between 0 and 30: ");
+                annualInterest = scanner.nextFloat();
+            }
+            else
+                break;
+        }
+        float monthlyInterest = annualInterest / PERCENT / MONTHS_IN_YEAR;
+
+        System.out.print("Period(Years): ");
+        byte years = scanner.nextByte();
+        while(true){
+            if(years<0||years>31){
+                System.out.print("Period between 1 and 30: ");
+                years = scanner.nextByte();
+            }
+            else
+                break;
+        }
+        int numberOfPayments = years*MONTHS_IN_YEAR;
+        double mortage = principal
+                *(monthlyInterest * Math.pow(1 + monthlyInterest, numberOfPayments)
+                / (Math.pow(1 + monthlyInterest, numberOfPayments) - 1));
+        String mortageFormatted = NumberFormat.getCurrencyInstance().format(mortage);
+        System.out.println("Mortage: " + mortageFormatted);
+    }
+}
